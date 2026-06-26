@@ -95,6 +95,7 @@ pub enum ScoreEvents {
     ScoreRecorded {
         id: ScoreId,
         actor: ActorId,
+        dimensions: ScoreDimensions,
         overall: u8,
         confidence: u8,
         evidence_hash: [u8; 32],
@@ -232,6 +233,7 @@ impl<S: StateMut<Item = ScoreState, Error = Infallible>> Score<S> {
         self.emit_event(ScoreEvents::ScoreRecorded {
             id: snapshot.id,
             actor: snapshot.actor,
+            dimensions: snapshot.dimensions,
             overall: snapshot.overall,
             confidence: snapshot.confidence,
             evidence_hash: snapshot.evidence_hash,

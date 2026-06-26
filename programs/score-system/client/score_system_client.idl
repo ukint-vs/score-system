@@ -1,7 +1,7 @@
 
 !@sails: 1.0.1
 
-service Score@0xf21afb8c88d62b18 {
+service Score@0x2e4ddabdd3c628f8 {
     events {
         FormulaVersionUpdated {
             old_version: u32,
@@ -17,6 +17,7 @@ service Score@0xf21afb8c88d62b18 {
         ScoreRecorded {
             id: u64,
             actor: ActorId,
+            dimensions: ScoreDimensions,
             overall: u8,
             confidence: u8,
             evidence_hash: [u8; 32],
@@ -104,6 +105,6 @@ program ScoreSystemClient {
         New(initial_attesters: [ActorId]);
     }
     services {
-        Score@0xf21afb8c88d62b18,
+        Score@0x2e4ddabdd3c628f8,
     }
 }

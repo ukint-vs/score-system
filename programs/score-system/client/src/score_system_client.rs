@@ -159,7 +159,7 @@ pub mod score {
 
     impl sails_rs::client::Identifiable for ScoreImpl {
         const INTERFACE_ID: sails_rs::InterfaceId =
-            sails_rs::InterfaceId::from_bytes_8([242, 26, 251, 140, 136, 214, 43, 24]);
+            sails_rs::InterfaceId::from_bytes_8([46, 77, 218, 189, 211, 198, 40, 248]);
     }
 
     impl<E: sails_rs::client::GearEnv> Score for sails_rs::client::Service<ScoreImpl, E> {
@@ -257,6 +257,7 @@ pub mod score {
             ScoreRecorded {
                 id: u64,
                 actor: ActorId,
+                dimensions: ScoreDimensions,
                 overall: u8,
                 confidence: u8,
                 evidence_hash: [u8; 32],
