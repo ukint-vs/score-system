@@ -1,0 +1,109 @@
+
+!@sails: 1.0.1
+
+service Score@0xf21afb8c88d62b18 {
+    events {
+        FormulaVersionUpdated {
+            old_version: u32,
+            new_version: u32,
+        },
+        Paused,
+        ScoreAttesterAdded {
+            attester: ActorId,
+        },
+        ScoreAttesterRemoved {
+            attester: ActorId,
+        },
+        ScoreRecorded {
+            id: u64,
+            actor: ActorId,
+            overall: u8,
+            confidence: u8,
+            evidence_hash: [u8; 32],
+            reason_code: String,
+            formula_version: u32,
+            attester: ActorId,
+            recorded_at: u64,
+        },
+        Unpaused,
+    }
+    functions {
+        AddScoreAttester(attester: ActorId) -> Result<(), ScoreError>;
+        @query
+        GetConfig() -> ScoreConfig;
+        @query
+        GetScore(actor: ActorId) -> Option<ScoreSnapshot>;
+        @query
+        GetScoreHistory(actor: ActorId, cursor: Option<u64>, limit: u32) -> Result<ScoreHistoryPage, ScoreError>;
+        @query
+        GetScoreSnapshot(actor: ActorId) -> Option<ScoreSnapshot>;
+        @query
+        ListScoreAttesters() -> [ActorId];
+        Pause() -> Result<(), ScoreError>;
+        RecordScore(req: RecordScoreReq) -> Result<u64, ScoreError>;
+        RemoveScoreAttester(attester: ActorId) -> Result<(), ScoreError>;
+        Unpause() -> Result<(), ScoreError>;
+        UpdateFormulaVersion(new_version: u32) -> Result<(), ScoreError>;
+    }
+    types {
+        struct RecordScoreReq {
+            actor: ActorId,
+            dimensions: ScoreDimensions,
+            confidence: u8,
+            evidence_hash: [u8; 32],
+            reason_code: String,
+        }
+        struct ScoreConfig {
+            owner: ActorId,
+            score_attesters: [ActorId],
+            formula_version: u32,
+            next_score_id: u64,
+            paused: bool,
+        }
+        struct ScoreDimensions {
+            proposal_quality: u8,
+            delivery_reliability: u8,
+            integration_count: u8,
+            past_impact_score: u8,
+            community_signal: u8,
+        }
+        enum ScoreError {
+            Unauthorized,
+            Paused,
+            InvalidActor,
+            InvalidDimension,
+            InvalidConfidence,
+            InvalidEvidenceHash,
+            EmptyReasonCode,
+            ReasonCodeTooLong,
+            LimitTooLarge,
+            ScoreIdOverflow,
+            InvalidFormulaVersion,
+        }
+        struct ScoreHistoryPage {
+            items: [ScoreSnapshot],
+            next_cursor: Option<u64>,
+        }
+        struct ScoreSnapshot {
+            id: u64,
+            actor: ActorId,
+            dimensions: ScoreDimensions,
+            overall: u8,
+            confidence: u8,
+            evidence_hash: [u8; 32],
+            reason_code: String,
+            formula_version: u32,
+            attester: ActorId,
+            recorded_at: u64,
+        }
+    }
+}
+
+program ScoreSystemClient {
+    constructors {
+        New(initial_attesters: [ActorId]);
+    }
+    services {
+        Score@0xf21afb8c88d62b18,
+    }
+}

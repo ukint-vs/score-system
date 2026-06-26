@@ -1,0 +1,45 @@
+[package]
+name = "score-system"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "Package allowing to build WASM binary for the program and IDL file for it"
+repository.workspace = true
+license.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+sails-rs.workspace = true
+score-system-app.workspace = true
+
+[dev-dependencies]
+sails-rs = { workspace = true, features = ["gtest"] }
+score-system-app.workspace = true
+score-system-client.workspace = true
+tokio = { workspace = true, features = ["rt", "macros"] }
+
+[build-dependencies]
+sails-rs = { workspace = true, features = ["build"] }
+score-system-app.workspace = true
+
+[workspace]
+resolver = "3"
+members = ["app", "client"]
+
+[workspace.package]
+version = "0.1.0"
+authors = ["ukint-vs"]
+edition = "2024"
+rust-version = "1.91"
+repository = "https://github.com/ukint-vs/score-system"
+license = "MIT"
+keywords = ["gear", "sails", "smart-contracts", "wasm", "no-std"]
+categories = ["cryptography::cryptocurrencies", "no-std", "wasm"]
+
+[workspace.dependencies]
+sails-rs = "1.0.1"
+tokio = "1.50.0"
+score-system-app = { version = "0.1.0", path = "app" }
+score-system-client = { version = "0.1.0", path = "client" }

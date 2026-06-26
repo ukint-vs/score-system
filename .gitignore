@@ -1,0 +1,5 @@
+/.code-review-graph/
+/target/
+
+/*.md
+!/README.md
