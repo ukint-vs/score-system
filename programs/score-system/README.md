@@ -32,7 +32,7 @@ rtk cargo fmt --all --check --manifest-path programs/score-system/Cargo.toml
 > For off-chain integration tests against a running node, add the `gclient` feature:
 
 ```bash
-cargo add sails-rs --dev --features gclient
+rtk cargo add sails-rs --dev --features gclient
 ```
 
 # License
