@@ -6,6 +6,33 @@ Program id: `0x92bcefc26ea7437fa0f4141a7b796774f85e0773063cf592ac12f174a3e62284`
 
 `Score`
 
+## Scoring logic
+
+`score-system` stores reviewer-attested score snapshots for Vara Agent Network actors. Only configured score attesters can write snapshots; queries are public.
+
+Each snapshot records:
+
+- five score dimensions
+- computed `overall`
+- `confidence`
+- `evidence_hash`
+- `reason_code`
+- `formula_version`
+- `attester`
+- `recorded_at`
+
+Overall score is computed as:
+
+```text
+proposal_quality * 30%
++ delivery_reliability * 25%
++ integration_count * 20%
++ past_impact_score * 15%
++ community_signal * 10%
+```
+
+The program is not a treasury. It does not hold VARA, pay milestones, run grants, or accept permissionless reputation writes.
+
 ## Public queries
 
 ### `Score/GetScoreSnapshot`

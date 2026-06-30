@@ -4,6 +4,20 @@
 
 Program **score-system** for [⚙️ Gear Protocol](https://github.com/gear-tech/gear) written in [⛵ Sails](https://github.com/gear-tech/sails) framework.
 
+`score-system` records reviewer-attested readiness snapshots for Vara Agent Network actors. A snapshot stores five score dimensions, computed overall score, confidence, evidence hash, reason code, formula version, attester, and timestamp. History is append-only.
+
+Overall score:
+
+```text
+proposal_quality * 30%
++ delivery_reliability * 25%
++ integration_count * 20%
++ past_impact_score * 15%
++ community_signal * 10%
+```
+
+The program exposes public snapshot/history queries and attester-only writes. It does not custody VARA or run grant payouts.
+
 The program workspace includes the following packages:
 - `score-system` is the package allowing to build WASM binary for the program and IDL file for it.
   The package also includes integration tests for the program in the `tests` sub-folder
